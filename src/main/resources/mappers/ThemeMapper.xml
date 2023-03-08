@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.ThemeMapper" >
+
+    <insert id="add" parameterType="com.mirac.entity.Theme">
+        INSERT INTO `theme` ( `thename`) VALUES (#{thename})
+    </insert>
+
+    <delete id="delete" parameterType="integer">
+        DELETE FROM theme WHERE theid=#{theid}
+    </delete>
+
+    <select id="getAll" resultType="com.mirac.entity.Theme">
+        SELECT * FROM theme
+    </select>
+
+    <select id="query" resultType="com.mirac.entity.Theme" parameterType="string">
+        SELECT * FROM theme
+        <where>
+            <if test="key != null and key != ''">
+                <bind name="likestr" value="'%' + key + '%'"></bind>
+                and thename LIKE #{likestr}
+            </if>
+        </where>
+    </select>
+</mapper>
+
+

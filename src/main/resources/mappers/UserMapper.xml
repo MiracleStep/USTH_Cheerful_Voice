@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.UserMapper" >
+
+
+    <insert id="add" parameterType="com.mirac.entity.User" >
+        INSERT INTO user (username, password, realname, sex, hobbys, birthday, city, email, qq)
+				VALUES (#{username}, #{password}, #{realname}, #{sex}, #{hobbys}, #{birthday}, #{city}, #{email}, #{qq})
+    </insert>
+
+    <update id="update" parameterType="com.mirac.entity.User" >
+        UPDATE user SET
+				password = #{password}, realname = #{realname}, sex = #{sex},
+				hobbys = #{hobbys}, birthday = #{birthday}, city = #{city}, email = #{email}, qq = #{qq}
+				WHERE userid = #{userid}
+    </update>
+
+    <update id="updateState" parameterType="com.mirac.entity.User">
+        UPDATE user SET state = #{state} WHERE userid = #{userid}
+    </update>
+
+    <update id="updatePw" >
+        UPDATE `user` SET  `password`= #{password} WHERE (`username`=#{username})
+    </update>
+
+    <select id="query" resultType="com.mirac.entity.User" >
+        SELECT * FROM user WHERE username = #{username} and password = #{password}
+    </select>
+
+    <select id="queryByName" resultType="com.mirac.entity.User" parameterType="string">
+        SELECT * FROM user
+        <if test="username != null and username != ''" >
+            <where>
+                <bind name="likestr" value="'%' + username + '%'"/>
+                username like #{likestr}
+            </where>
+        </if>
+        ORDER BY createtime DESC
+    </select>
+
+    <select id="isExist" resultType="java.lang.Boolean" parameterType="string">
+        select count(*) as count from user where username=#{username}
+    </select>
+
+</mapper>
+
+

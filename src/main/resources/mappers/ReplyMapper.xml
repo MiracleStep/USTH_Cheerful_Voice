@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.ReplyMapper" >
+
+    <insert id="replyMsg" parameterType="com.mirac.entity.Reply">
+        INSERT INTO reply(msgid,userid,replycontents,replyip) VALUES(#{msgid},#{userid},#{replycontents},#{replyip})
+    </insert>
+
+    <select id="queryBymsgid" resultType="com.mirac.entity.ReplyInfo" parameterType="integer">
+        SELECT replyid,msgid,replycontents,replytime,replyip,
+                u.userid,u.username,realname,sex,city
+        FROM reply r INNER JOIN user u on r.userid=u.userid
+        WHERE r.msgid=#{msgid} ORDER BY replytime
+    </select>
+
+    <select id="queryCountByDate" resultType="java.lang.Long">
+        SELECT COUNT(*) AS count FROM reply WHERE replytime > #{startDate} AND replytime &lt; #{endDate}
+    </select>
+</mapper>
+
+

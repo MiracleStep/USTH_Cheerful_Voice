@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.AdminMapper">
+    <update id="updatepwd" parameterType="com.mirac.entity.Admin">
+        UPDATE `admin` SET  `pwd` = #{pwd}  WHERE `name` = #{name}
+    </update>
+
+    <select id="login" resultType="com.mirac.entity.Admin" parameterType="com.mirac.entity.User">
+        SELECT * from admin WHERE name= #{username} AND  pwd = #{password}
+    </select>
+</mapper>
+
+

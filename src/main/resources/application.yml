@@ -1,0 +1,35 @@
+server:
+  port: 8087
+spring:
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/
+#      suffix: .jsp
+  application:
+    name: mirac-app-server
+#  redis: #redis配置
+#    port: 6379
+#    host: 192.168.136.160
+  datasource:
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/usth?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+      username: root
+      password: root
+mybatis-plus:
+  mapper-locations: classpath*:mappers/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.example.ssm.rental.entity
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID # 主键生成策略
+#logging:
+#  file: ./logs/log.log
+#  level:
+#    org:
+#      springframework:
+#        boot:
+#          autoconfigure: error

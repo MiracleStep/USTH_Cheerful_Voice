@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.MessageMapper" >
+
+    <insert id="add" parameterType="com.mirac.entity.Message">
+        INSERT INTO `message` ( `userid`, `msgtopic`, `msgcontents`,  `msgip`, `theid`) VALUES ( #{userid}, #{msgtopic}, #{msgcontents}, #{msgip}, #{theid})
+    </insert>
+
+    <update id="updateState" >
+        update message set state=#{state} where msgid=#{msgid}
+    </update>
+
+    <select id="get" resultType="com.mirac.entity.MessageInfo" parameterType="integer">
+        select a.msgid, msgtopic, msgcontents, msgtime, msgip, a.theid,
+               c.thename,a.userid, username, realname, sex, city
+        FROM message a
+        LEFT JOIN user b ON a.userid=b.userid
+        LEFT JOIN theme c ON a.theid=c.theid
+        where a.msgid=#{id}
+    </select>
+
+    <select id="query" resultType="com.mirac.entity.MessageInfo" parameterType="com.mirac.entity.MessageCriteria">
+        select a.msgid, msgtopic, msgcontents, msgtime, msgip, a.state,
+        a.theid, c.thename,a.userid, username, realname, sex, city, d.accessCount, d.replyCount
+        FROM message a
+        LEFT JOIN user b ON a.userid=b.userid
+        LEFT JOIN theme c ON a.theid=c.theid
+        LEFT JOIN count d ON a.msgid=d.msgid
+
+        <where>
+            <if test="userid > 0">
+                and a.userid = #{userid}
+            </if>
+            <if test="username != null and username != ''">
+                AND b.realname LIKE #{username}
+            </if>
+            <if test="theid > 0">
+                AND a.theid=#{theid}
+            </if>
+            <if test="state >= -1">
+                AND a.state >= #{state}
+            </if>
+            <if test="key != null and key != ''">
+                <bind name="likestr" value="'%' + key + '%'"></bind>
+                AND a.msgtopic LIKE #{likestr}
+            </if>
+        </where>
+
+        <choose>
+            <when test="orderType == '1'.toString() ">
+                ORDER BY d.accessCount
+            </when>
+            <when test="orderType == '2'.toString() ">
+                ORDER BY msgtime desc
+            </when>
+        </choose>
+    </select>
+
+    <select id="queryNew" resultType="com.mirac.entity.MessageInfo" >
+        SELECT m.msgid,msgtopic,msgcontents,msgtime,msgip,m.userid,
+                username,realname,sex,city, accessCount,replyCount
+        FROM message m
+        LEFT JOIN user u ON u.userid=m.userid
+        LEFT JOIN count c ON c.msgid=m.msgid
+        WHERE m.state >= 0
+        ORDER BY m.msgtime DESC
+    </select>
+
+    <select id="queryHot" resultType="com.mirac.entity.MessageInfo">
+        SELECT m.msgid,msgtopic,msgcontents,msgtime,msgip,m.userid,
+                username,realname,sex,city, accessCount,replyCount
+        FROM message m
+        LEFT JOIN user u ON u.userid=m.userid
+        LEFT JOIN count c ON c.msgid=m.msgid
+        WHERE m.state>=0
+        ORDER BY c.accessCount DESC
+    </select>
+
+    <select id="queryTheme" resultType="com.mirac.entity.MessageInfo">
+        SELECT b.msgid, msgtopic, msgcontents, msgtime, msgip, b.state,
+                b.theid, a.thename, b.userid, username, realname, sex, city,
+                d.accessCount, d.replyCount, max(e.replytime) as replytime
+        FROM theme a
+        LEFT JOIN message b ON a.theid = b.theid
+        LEFT JOIN user c ON b.userid = c.userid
+        LEFT JOIN count d ON b.msgid = d.msgid
+        LEFT JOIN reply e on b.msgid = e.msgid
+        WHERE b.state >= 0 AND b.msgtime IN
+            (SELECT MAX(msgtime) FROM message f WHERE f.state >= 0 AND b.theid = f.theid)
+        GROUP BY
+            b.msgid, msgtopic, msgcontents, msgtime, msgip, b.state,
+            b.theid, a.thename, a.count,
+            b.userid, username, realname, sex, city,
+            d.accessCount, d.replyCount
+        ORDER BY a.count DESC
+    </select>
+
+    <select id="queryCountByDate" resultType="java.lang.Long" >
+        SELECT COUNT(*) AS count FROM message WHERE msgtime > #{startDate} AND msgtime &lt; #{endDate}
+    </select>
+
+
+</mapper>
+
+

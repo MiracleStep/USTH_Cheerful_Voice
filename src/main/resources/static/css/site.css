@@ -1,0 +1,139 @@
+@CHARSET "UTF-8";
+.navbar{
+	margin-bottom:0px;
+	z-index:9999;
+}
+.masthead {
+    /* padding: 60px 0px 0px 0px; */
+    margin-top:50px;
+    margin-bottom: 0;
+    color: #fff;
+}
+.masthead h1{
+	font-size: 60px;
+    line-height: 1;
+    letter-spacing: -2px;
+    font-weight: 700;
+}
+.jumbotron{
+	background: linear-gradient(45deg, #b4e5a4 0, #5fe5dd 100%);
+}
+.jumbotron:after{
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	opacity: .4;
+}
+
+.footer {
+    color: #777;
+    padding: 30px 0;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 70px;
+    background:linear-gradient(45deg, #aee4f1 0, #7df1d0 100%);
+}
+.template{
+	display:none;
+}
+.msgitem{
+	padding:15px 15px 30px 15px;
+	border-bottom: 1px solid #9595e5;
+}
+.msgtitle{
+	overflow:hidden;
+	border-bottom: 1px solid #959595;
+}
+.msgtitle h3{
+	float:left;
+}
+.msgtitle .replybtn{
+	float:right;
+	margin-top: 15px;
+    margin-bottom: 10px;
+}
+.reply{
+	padding:5px 0 10px 0;
+	border-bottom: 1px solid #959595;
+	display:none;
+}
+.reply .msgcontent{
+	padding:10px;
+	background:#F5F5FE;
+	font-size:16px;
+}
+.reply .author{
+	color: #fa7efa;
+	font-size:16px;
+}
+.rightinfo{
+	padding:5px 0 5px 0;
+	color:#888;
+	float:right;
+}
+.modalcenter{
+	margin:100px 0 0 0;
+}
+.msglist{
+	line-height:34px;
+	padding:10px 0 10px 0;
+	border-bottom: 1px solid #E5E5E5;
+}
+.msglist .title{
+	display:block;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	font-size: 16px;
+	font-weight: bold;
+}
+.msglist .author{
+	color: #595959;
+}
+.msglist .time{
+	
+	display:block;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	color: #595959;
+}
+.msglist .userinfo{
+	
+	display:block;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	color: #595959;
+}
+/*
+ * 长度限制
+*/
+.text-limit{
+	display:block;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+}
+/*
+ * 小于768时的
+*/
+@media screen and (max-width: 768px)  { 
+.msglist{
+	padding:10px 0 10px 0;
+	border-bottom: 1px solid #959595;
+}
+.msglist .title{
+	font-size: 16px;
+	font-weight: bold;
+}
+.msglist .author{
+	color: #595959;
+}
+.msglist .time{
+	color: #595959;
+}
+}

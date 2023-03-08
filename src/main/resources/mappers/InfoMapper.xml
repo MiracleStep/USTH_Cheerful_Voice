@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mirac.mapper.InfoMapper">
+
+    <insert id="add" parameterType="com.mirac.entity.Info">
+        INSERT INTO info(userid, title, content, detail, infotime, targeturl, infoip)
+        VALUES (#{userid}, #{title}, #{content}, #{detail}, #{infotime}, #{targeturl}, #{infoip})
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM info
+        WHERE infoid = #{id}
+    </delete>
+
+    <select id="getAll" resultType="com.mirac.entity.Info">
+        SELECT *
+        from info
+    </select>
+
+<!--    <select id="query" resultType="com.mirac.util.Page" parameterType="queryMessageVo">-->
+<!--        select a.msgid, msgtopic, msgcontents, msgtime, msgip, a.state,-->
+<!--        a.theid, c.thename,a.userid, username, realname, sex, city,-->
+<!--        d.accessCount, d.replyCount-->
+<!--        FROM message a-->
+<!--        LEFT JOIN user b ON a.userid=b.userid-->
+<!--        LEFT JOIN theme c ON a.theid=c.theid-->
+<!--        LEFT JOIN count d ON a.msgid=d.msgid-->
+<!--        <if test="messageCriteria != null">-->
+<!--            <where>-->
+<!--                <if test="messageCriteria.userid > 0">-->
+<!--                    and a.userid = #{messageCriteria.userid}-->
+<!--                </if>-->
+<!--                <if test="messageCriteria.username != null and messageCriteria.username != ''">-->
+<!--                    and b.realname like %${messageCriteria.username}%-->
+<!--                </if>-->
+<!--                <if test="messageCriteria.theid > 0">-->
+<!--                    AND a.theid= #{messageCriteria.theid}-->
+<!--                </if>-->
+<!--                <if test="messageCriteria.state >= -1">-->
+<!--                    and a.state >= #{messageCriteria.state}-->
+<!--                </if>-->
+<!--                <if test="messageCriteria.key != null and messageCriteria.key != ''">-->
+<!--                    and a.msgtopic like %${messageCriteria.key}%-->
+<!--                </if>-->
+<!--            </where>-->
+<!--        </if>-->
+<!--        <choose>-->
+<!--            <when test="messageCriteria.orderRule == MessageCriteria.OrderRuleEnum.ORDER_BY_ACCESS_COUNT">-->
+<!--                order by d.accessCount-->
+<!--            </when>-->
+<!--            <when test="messageCriteria.orderRule == MessageCriteria.OrderRuleEnum.ORDER_BY_MSG_TIME">-->
+<!--                order by msgtime-->
+<!--            </when>-->
+<!--        </choose>-->
+<!--        <if test="not asc">-->
+<!--            DESC-->
+<!--        </if>-->
+<!--    </select>-->
+
+
+    <select id="queryByPage" resultType="com.mirac.entity.Info" >
+        Select * from info
+    </select>
+
+</mapper>
+
+
