@@ -21,7 +21,7 @@ public class Message {
 	private String msgip;		// 创建主题帖的人的IP
 	private int theid;			// 主题ID
 	private int state;			// 帖子状态
-	
+	private String category;    // 帖子类别
 	public int getMsgid() {
 		return msgid;
 	}
@@ -73,11 +73,27 @@ public class Message {
 	public void setState(int state) {
 		this.state = state;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "Message [msgid=" + msgid + ", userid=" + userid + ", msgtopic=" + msgtopic + ", msgcontents="
-				+ msgcontents + ", msgtime=" + msgtime + ", msgip=" + msgip + ", theid=" + theid + ", state=" + state
-				+ "]";
-	}	
+		return "Message{" +
+				"msgid=" + msgid +
+				", userid=" + userid +
+				", msgtopic='" + msgtopic + '\'' +
+				", msgcontents='" + msgcontents + '\'' +
+				", msgtime=" + msgtime +
+				", msgip='" + msgip + '\'' +
+				", theid=" + theid +
+				", state=" + state +
+				", category='" + category + '\'' +
+				'}';
+	}
 }

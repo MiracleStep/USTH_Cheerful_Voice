@@ -1,6 +1,7 @@
 package com.mirac.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.mirac.util.ModelApi;
 import com.mirac.vo.ResponseResultVo;
 import com.mirac.vo.RestResponseVo;
 import com.mirac.entity.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +31,10 @@ public class UserMessageController extends HttpServlet {
 	@Autowired
 	private IMessageService messageservice;
 
+	@Autowired
+	private ModelApi modelApi;
+
+
 	//发帖
 	@RequestMapping("/add.action")
 	@ResponseBody
@@ -41,7 +47,12 @@ public class UserMessageController extends HttpServlet {
 
 		message.setUserid(userid);
 		message.setMsgip(msgip);
+
+		//调用模型进行分类
+		String category = modelApi.getCategory(message.getMsgtopic());
+		message.setCategory(category);
 		int rs=messageservice.addMsg(message);
+
 		if(rs>0){
 			return ResponseResultVo.POST_SUCCESSFULLY;
 		}else{

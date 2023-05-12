@@ -2,6 +2,7 @@ package com.mirac.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mirac.entity.Info;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 * @author Administrator
 *
 */
+@Mapper
 public interface InfoMapper extends BaseMapper<Info> {
 
 	int add(Info info);

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mirac.entity.Message;
 import com.mirac.entity.MessageCriteria;
 import com.mirac.entity.MessageInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 * @author Mirac
 *
 */
+@Mapper
 public interface MessageMapper extends BaseMapper<MessageInfo> {
 	/**
 	 * 添加帖子

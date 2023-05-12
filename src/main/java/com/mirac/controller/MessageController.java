@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +26,8 @@ public class MessageController extends HttpServlet {
 
 	@Autowired
 	private IMessageService messageservice;
+
+
 
     // 查看帖子详细信息
 	@RequestMapping("/getMsg.action")

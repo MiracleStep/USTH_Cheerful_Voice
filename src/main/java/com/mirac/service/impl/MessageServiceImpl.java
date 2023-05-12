@@ -20,8 +20,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageInfo> 
 	@Autowired
 	private MessageMapper messagedao;
 
-
-
 	@Autowired
 	private ReplyMapper replydao;
 

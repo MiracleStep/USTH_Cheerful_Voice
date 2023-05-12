@@ -2,6 +2,7 @@ package com.mirac.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mirac.entity.Theme;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @author Administrator
  *
  */
+@Mapper
 public interface ThemeMapper extends BaseMapper<Theme> {
 	
 	/**

@@ -13,7 +13,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/usth?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/usth?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false
       username: root
       password: root
 mybatis-plus:
@@ -26,6 +26,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID # 主键生成策略
+model:
+  model-url: http://127.0.0.1:5000
+
 #logging:
 #  file: ./logs/log.log
 #  level:

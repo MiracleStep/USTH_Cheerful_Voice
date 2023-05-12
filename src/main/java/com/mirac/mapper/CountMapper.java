@@ -3,12 +3,14 @@ package com.mirac.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mirac.entity.Admin;
 import com.mirac.entity.Count;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 帖子统计数据访问层接口
  * @author Administrator
  *
  */
+@Mapper
 public interface CountMapper extends BaseMapper<Count> {
 	
 	/**
