@@ -1,6 +1,7 @@
 package com.mirac.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.mirac.mapper.CountMapper;
 import com.mirac.vo.ResponseResultVo;
 import com.mirac.vo.RestResponseVo;
 import com.mirac.entity.Admin;
@@ -36,6 +37,7 @@ public class AdminMessageController {
     IMessageService iMessageService;
 
 
+
     //发布通知
     @RequestMapping("/addInfo.action")
     @ResponseBody
@@ -58,23 +60,24 @@ public class AdminMessageController {
         }
     }
 
-    //查询帖子
+    //获取和查询帖子（审核通过的，帖子状态为0或-1）
     @RequestMapping("/searchMsg.action")
     @ResponseBody
     private Object searchMsg(HttpServletRequest request, HttpServletResponse response,String key,String username,
                              @RequestParam(name = "theid", required = false, defaultValue = "-1") String theid,
+                             @RequestParam(name = "state", required = false, defaultValue = "0")Integer state,
                              @RequestParam(name = "pageNum", required = true, defaultValue = "1")Integer pageNum,
                              @RequestParam(name = "pageSize", defaultValue = "5")Integer pageSize) throws IOException {
 
         MessageCriteria messageCriteria = new MessageCriteria();
         messageCriteria.setKey(key);
+        messageCriteria.setState(state);
         messageCriteria.setUsername(username);
         messageCriteria.setTheid(Integer.parseInt(theid));
         messageCriteria.setOrderRule(MessageCriteria.OrderRuleEnum.ORDER_BY_MSG_TIME);
 
         PageInfo<MessageInfo> resPage = iMessageService.search(messageCriteria, pageNum, pageSize);
         return RestResponseVo.success(resPage);
-
     }
 
     //恢复帖子
@@ -93,7 +96,39 @@ public class AdminMessageController {
         }
     }
 
-    //删除帖子
+    //删除帖子(物理删除)
+    @RequestMapping("/removeMsg.action")
+    @ResponseBody
+    private Object removeMsg(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(name = "msgid", required = true, defaultValue = "-1") Integer msgid) throws IOException {
+
+        int res = iMessageService.removeMsg(msgid);
+
+        if (res == 1){
+            return ResponseResultVo.DELETE_SUCCESS;
+        }
+        else {
+            return ResponseResultVo.DELETE_ERROR;
+        }
+    }
+
+    //通过帖子
+    @RequestMapping("/passMsg.action")
+    @ResponseBody
+    private Object passMsg(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(name = "msgid", required = true, defaultValue = "-1") Integer msgid) throws IOException {
+
+        int res = iMessageService.passMsg(msgid);
+
+        if (res == 1){
+            return ResponseResultVo.DELETE_SUCCESS;
+        }
+        else {
+            return ResponseResultVo.DELETE_ERROR;
+        }
+    }
+
+    //删除帖子(逻辑删除)
     @RequestMapping("/deleteMsg.action")
     @ResponseBody
     private Object deleteMsg(HttpServletRequest request, HttpServletResponse response,

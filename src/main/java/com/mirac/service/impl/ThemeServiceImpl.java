@@ -3,6 +3,7 @@ package com.mirac.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mirac.mapper.MessageMapper;
 import com.mirac.mapper.ThemeMapper;
 import com.mirac.entity.Theme;
 import com.mirac.service.IThemeService;
@@ -17,6 +18,9 @@ public class ThemeServiceImpl extends ServiceImpl<ThemeMapper, Theme> implements
 	@Autowired
 	private ThemeMapper themedao;
 
+	@Autowired
+	private MessageMapper messageMapper;
+
 	@Override
 	public int add(Theme theme) {
 		return themedao.add(theme);
@@ -24,6 +28,7 @@ public class ThemeServiceImpl extends ServiceImpl<ThemeMapper, Theme> implements
 
 	@Override
 	public int delete(int theid) {
+		messageMapper.deleteBytheId(theid);
 		return themedao.delete(theid);
 	}
 

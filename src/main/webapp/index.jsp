@@ -194,7 +194,7 @@ $(function() {
 				<div
 					style="overflow: auto; height: 60px; line-height: 40px; padding-top: 20px;">
 					<div style="float: left">
-						<h3 style="display: inline">分类</h3>
+						<h3 style="display: inline">话题</h3>
 					</div>
 					<div style="float: right; vertical-align: bottom;">
 						<a href="thememsg.jsp">更多>></a>

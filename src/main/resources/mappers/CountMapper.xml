@@ -11,6 +11,10 @@
         UPDATE count set replyCount = replyCount + 1 WHERE msgid= #{id}
     </update>
 
+    <delete id="removeCount">
+        delete from count where msgid = #{id}
+    </delete>
+
 </mapper>
 
 

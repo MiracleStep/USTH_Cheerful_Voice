@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mirac.entity.*;
+import com.mirac.mapper.CountMapper;
 import com.mirac.mapper.MessageMapper;
 import com.mirac.mapper.ReplyMapper;
 import com.mirac.service.IMessageService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +25,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageInfo> 
 
 	@Autowired
 	private ReplyMapper replydao;
+
+	@Autowired
+	CountMapper countMapper;
 
 	@Override
 	public int addMsg(Message message) {
@@ -46,6 +52,18 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageInfo> 
 	public PageInfo<ReplyInfo> getReply(int msgid, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		List<ReplyInfo> replyInfos = replydao.queryBymsgid(msgid);
+//		for (ReplyInfo replyInfo : replyInfos) {
+//			Date replytime = replyInfo.getReplytime();
+//			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			String format = simpleDateFormat.format(replytime);
+//			try {
+//				Date parse = simpleDateFormat.parse(format);
+//				replyInfo.setReplytime(parse);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
 		PageInfo<ReplyInfo> replyInfoPageInfo = new PageInfo<>(replyInfos);
 		return replyInfoPageInfo;
 	}
@@ -84,10 +102,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageInfo> 
 		return messagedao.updateState(msgId, state);
 	}
 
-//	@Override
-//	public int updateMsg(Message message) {
-//		return 0;
-//	}
 
 	@Override
 	public PageInfo<MessageInfo> search(MessageCriteria messageCriteria, int pageNum, int pageSize) {
@@ -110,6 +124,17 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageInfo> 
 	@Override
 	public long queryReplyCountByDate(Date startDate, Date endDate) {
 		return replydao.queryCountByDate(startDate, endDate);
+	}
+
+	@Override
+	public int removeMsg(Integer msgid) {
+		countMapper.removeCount(msgid);
+		return messagedao.removeMsg(msgid);
+	}
+
+	@Override
+	public int passMsg(Integer msgid) {
+		return messagedao.updateState(msgid, 0);
 	}
 
 }

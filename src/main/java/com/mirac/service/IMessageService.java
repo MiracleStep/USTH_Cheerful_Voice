@@ -48,9 +48,14 @@ public interface IMessageService extends IService<MessageInfo> {
 
 //	int updateMsg(Message message);
 
+
 	PageInfo<MessageInfo> search(MessageCriteria messageCriteria, int pageNum, int pageSize);
 	
 	long queryMsgCountByDate(Date startDate, Date endDate);	// 根据时间查发贴数量
 	
 	long queryReplyCountByDate(Date startDate, Date endDate);	// 根据时间回贴数量
+
+	int removeMsg(Integer msgid);
+
+	int passMsg(Integer msgid);
 }

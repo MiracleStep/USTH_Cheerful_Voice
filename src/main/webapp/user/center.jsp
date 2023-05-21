@@ -131,7 +131,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			success:function(data){
 				if(data.res==1){
 					alert("更新成功！");
-					window.location.replace("index.jsp");
+					// window.location.replace("index.jsp");
+					window.location.replace("");
 				}
 				else {
 					$(".text-warning").text("更新失败！");
@@ -144,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			}
 		});
-		return false;
+		return true;
 	}
 </script>
 </head>

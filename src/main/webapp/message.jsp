@@ -85,6 +85,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   },"json");
 		
 	}
+
+
 	function getReply(){
 		// Ajax 获取回复信息
 		$.get("/message/getReply.action",

@@ -40,16 +40,22 @@ public class UserMessageController extends HttpServlet {
 	@ResponseBody
 	private Object add(HttpServletRequest request, HttpServletResponse response, Message message) throws ServletException, IOException {
 		HttpSession session=request.getSession();
-		User user=(User) session.getAttribute("user");
-		int userid=user.getUserid();//用户ID
+		User user = (User) session.getAttribute("user");
+		int userid = user.getUserid();//用户ID
 		String msgip=IPUtil.getIP(request);//发帖人的IP
 		message.setMsgcontents(HTMLReplace.replace(message.getMsgcontents()));//帖子内容转换为HTML格式
 
 		message.setUserid(userid);
 		message.setMsgip(msgip);
-
+		message.setState(1);
 		//调用模型进行分类
-		String category = modelApi.getCategory(message.getMsgtopic());
+		String category = "无分类";
+		try {
+			category = modelApi.getCategory(message.getMsgtopic());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 		message.setCategory(category);
 		int rs=messageservice.addMsg(message);
 

@@ -20,9 +20,9 @@ public class MessageCriteria {
 	 */
 	private int theid = -1;
 	/**
-	 * 状态
+	 * 状态 0表示正常 -1表示逻辑删除 1表示待审核
 	 */
-	private int state = -1;
+	private int state = 1;
 	/**
 	 * 关键字查询
 	 */

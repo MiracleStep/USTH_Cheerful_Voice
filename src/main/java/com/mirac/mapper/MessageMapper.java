@@ -73,4 +73,13 @@ public interface MessageMapper extends BaseMapper<MessageInfo> {
 	 * @return
 	 */
 	long queryCountByDate(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+
+	/**
+	 * 移除帖子
+	 * @param msgid 帖子id
+	 * @return
+	 */
+    int removeMsg(Integer msgid);
+
+    void deleteBytheId(int theid);
 }

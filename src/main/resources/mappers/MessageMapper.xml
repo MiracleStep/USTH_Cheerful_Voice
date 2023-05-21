@@ -5,12 +5,22 @@
 <mapper namespace="com.mirac.mapper.MessageMapper" >
 
     <insert id="add" parameterType="com.mirac.entity.Message">
-        INSERT INTO `message` ( `userid`, `msgtopic`, `msgcontents`,  `msgip`, `theid`) VALUES ( #{userid}, #{msgtopic}, #{msgcontents}, #{msgip}, #{theid})
+        INSERT INTO `message` ( `userid`, `msgtopic`, `msgcontents`,  `msgip`, `theid`, `state`,`category`) VALUES ( #{userid}, #{msgtopic}, #{msgcontents}, #{msgip}, #{theid}, #{state} ,#{category})
     </insert>
 
     <update id="updateState" >
         update message set state=#{state} where msgid=#{msgid}
     </update>
+
+    <delete id="removeMsg" >
+        delete from message where msgid = #{id}
+    </delete>
+
+    <delete id="deleteBytheId">
+        SET FOREIGN_KEY_CHECKS=0;
+        DELETE t1,t2 from `count` as t1 LEFT JOIN `message` as t2 ON t1.msgid=t2.msgid WHERE t2.theid=#{id};
+        SET FOREIGN_KEY_CHECKS=1;
+    </delete>
 
     <select id="get" resultType="com.mirac.entity.MessageInfo" parameterType="integer">
         select a.msgid, msgtopic, msgcontents, msgtime, msgip, a.theid,
@@ -23,7 +33,8 @@
 
     <select id="query" resultType="com.mirac.entity.MessageInfo" parameterType="com.mirac.entity.MessageCriteria">
         select a.msgid, msgtopic, msgcontents, msgtime, msgip, a.state,
-        a.theid, c.thename,a.userid, username, realname, sex, city, d.accessCount, d.replyCount
+            a.theid, c.thename,a.userid, username, realname, sex, city, category,
+            d.accessCount, d.replyCount
         FROM message a
         LEFT JOIN user b ON a.userid=b.userid
         LEFT JOIN theme c ON a.theid=c.theid
@@ -39,8 +50,11 @@
             <if test="theid > 0">
                 AND a.theid=#{theid}
             </if>
-            <if test="state >= -1">
-                AND a.state >= #{state}
+            <if test="state != 1">
+                AND a.state != 1
+            </if>
+            <if test="state == 1">
+                AND a.state = 1
             </if>
             <if test="key != null and key != ''">
                 <bind name="likestr" value="'%' + key + '%'"></bind>
@@ -64,7 +78,7 @@
         FROM message m
         LEFT JOIN user u ON u.userid=m.userid
         LEFT JOIN count c ON c.msgid=m.msgid
-        WHERE m.state >= 0
+        WHERE m.state = 0
         ORDER BY m.msgtime DESC
     </select>
 
@@ -74,7 +88,7 @@
         FROM message m
         LEFT JOIN user u ON u.userid=m.userid
         LEFT JOIN count c ON c.msgid=m.msgid
-        WHERE m.state>=0
+        WHERE m.state = 0
         ORDER BY c.accessCount DESC
     </select>
 
@@ -87,8 +101,8 @@
         LEFT JOIN user c ON b.userid = c.userid
         LEFT JOIN count d ON b.msgid = d.msgid
         LEFT JOIN reply e on b.msgid = e.msgid
-        WHERE b.state >= 0 AND b.msgtime IN
-            (SELECT MAX(msgtime) FROM message f WHERE f.state >= 0 AND b.theid = f.theid)
+        WHERE b.state = 0 AND b.msgtime IN
+            (SELECT MAX(msgtime) FROM message f WHERE f.state = 0 AND b.theid = f.theid)
         GROUP BY
             b.msgid, msgtopic, msgcontents, msgtime, msgip, b.state,
             b.theid, a.thename, a.count,

@@ -25,4 +25,9 @@ public interface CountMapper extends BaseMapper<Count> {
 	 * @return
 	 */
 	int updateReplyCount(int msgid);
+
+	/**
+	 * 删除对应的count记录
+	 */
+	void removeCount(int msgid);
 }

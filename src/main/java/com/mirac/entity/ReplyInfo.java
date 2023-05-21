@@ -12,7 +12,7 @@ public class ReplyInfo {
 	private int replyid;
 	private int msgid;
 	private String replycontents;
-	private Date replytime;
+	private String replytime;
 	private String replyip;
 	private int userid;
 	private String username;		// 回帖人姓名
@@ -38,10 +38,10 @@ public class ReplyInfo {
 	public void setReplycontents(String replycontents) {
 		this.replycontents = replycontents;
 	}
-	public Date getReplytime() {
+	public String getReplytime() {
 		return replytime;
 	}
-	public void setReplytime(Date replytime) {
+	public void setReplytime(String replytime) {
 		this.replytime = replytime;
 	}
 	public String getReplyip() {

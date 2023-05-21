@@ -9,6 +9,11 @@
     </properties>
     <root id="archive" name="cheer-app-server-2.4.5.war">
       <element id="artifact" artifact-name="cheer-app-server:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="library" level="project" name="cheer-app-server" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

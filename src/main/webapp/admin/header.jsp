@@ -46,6 +46,7 @@
 			<c:if test="${sessionScope.admin != null}">
 				<li><a href="admin/addinfo.jsp">发布通知</a></li>
 				<li><a href="admin/infomanager.jsp">通知管理</a></li>
+				<li><a href="admin/msgcheck.jsp">帖子审核</a></li>
 				<li><a href="admin/msgmanager.jsp">帖子管理</a></li>
 				<li><a href="admin/thememanager.jsp">话题管理</a></li>
 				<li><a href="admin/usermanager.jsp">用户管理</a></li>

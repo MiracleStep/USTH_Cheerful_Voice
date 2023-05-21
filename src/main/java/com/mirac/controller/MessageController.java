@@ -46,8 +46,9 @@ public class MessageController extends HttpServlet {
 		PageInfo<ReplyInfo> reply = messageservice.getReply(msgId, pageNum, pageSize);
 
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
 		String json = JSON.toJSONString(reply);
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("application/json;charset=utf-8");
 		response.getWriter().print("{\"reply\":"+json+"}");
 	}
 

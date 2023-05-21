@@ -27,6 +27,7 @@ public class MessageInfo {
 	private String realname;		// 用户昵称
 	private String sex;				// 性别
 	private String city;			// 城市
+	private String category;		//帖子分类类别
 	
 	private int accessCount;		// 浏览量
 	private int replyCount;			// 回复量
@@ -131,13 +132,35 @@ public class MessageInfo {
 	public void setReplytime(Date replytime) {
 		this.replytime = replytime;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "MessageInfo [msgid=" + msgid + ", msgtopic=" + msgtopic + ", msgcontents=" + msgcontents + ", msgtime="
-				+ msgtime + ", msgip=" + msgip + ", state=" + state + ", theid=" + theid + ", thename=" + thename
-				+ ", userid=" + userid + ", username=" + username + ", realname=" + realname + ", sex=" + sex
-				+ ", city=" + city + ", accessCount=" + accessCount + ", replyCount=" + replyCount + ", replytime="
-				+ replytime + "]";
-	}	
+		return "MessageInfo{" +
+				"msgid=" + msgid +
+				", msgtopic='" + msgtopic + '\'' +
+				", msgcontents='" + msgcontents + '\'' +
+				", msgtime=" + msgtime +
+				", msgip='" + msgip + '\'' +
+				", state=" + state +
+				", theid=" + theid +
+				", thename='" + thename + '\'' +
+				", userid=" + userid +
+				", username='" + username + '\'' +
+				", realname='" + realname + '\'' +
+				", sex='" + sex + '\'' +
+				", city='" + city + '\'' +
+				", category='" + category + '\'' +
+				", accessCount=" + accessCount +
+				", replyCount=" + replyCount +
+				", replytime=" + replytime +
+				'}';
+	}
 }

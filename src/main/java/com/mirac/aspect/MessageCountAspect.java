@@ -14,8 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageCountAspect {
 
+	//统计帖子访问和回复量的AOP增强方法
+
 	@Autowired
 	private CountMapper countMapper;
+
 
 	@Pointcut(value="execution(* com.mirac.service.impl.MessageServiceImpl.getMsg(..))")
 	private void pointcut1(){}

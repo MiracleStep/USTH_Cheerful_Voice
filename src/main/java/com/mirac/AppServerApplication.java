@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @ServletComponentScan // 扫描过滤器注解
 @EnableTransactionManagement
-@MapperScan("com.mirac.mapper")
 public class AppServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(AppServerApplication.class, args);
