@@ -2,6 +2,7 @@ package com.mirac.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.mirac.entity.MessageCriteria;
 import com.mirac.vo.RestResponseVo;
 import com.mirac.entity.MessageInfo;
 import com.mirac.entity.ReplyInfo;
@@ -26,7 +27,6 @@ public class MessageController extends HttpServlet {
 
 	@Autowired
 	private IMessageService messageservice;
-
 
 
     // 查看帖子详细信息
@@ -90,5 +90,25 @@ public class MessageController extends HttpServlet {
 //		String json=gson.toJson(page);
 //		response.getWriter().print("{\"res\": 1, \"themeMsg\":"+json+"}");
 		return RestResponseVo.success(page);
+	}
+
+	//获取和查询帖子（审核通过的，帖子状态为0或-1）
+	@RequestMapping("/searchMsg.action")
+	@ResponseBody
+	private Object searchMsg(HttpServletRequest request, HttpServletResponse response,String key,String username,
+							 @RequestParam(name = "theid", required = false, defaultValue = "-1") String theid,
+							 @RequestParam(name = "state", required = false, defaultValue = "0")Integer state,
+							 @RequestParam(name = "pageNum", required = true, defaultValue = "1")Integer pageNum,
+							 @RequestParam(name = "pageSize", defaultValue = "10")Integer pageSize) throws IOException {
+
+		MessageCriteria messageCriteria = new MessageCriteria();
+		messageCriteria.setKey(key);
+		messageCriteria.setState(state);
+		messageCriteria.setUsername(username);
+		messageCriteria.setTheid(Integer.parseInt(theid));
+		messageCriteria.setOrderRule(MessageCriteria.OrderRuleEnum.ORDER_BY_MSG_TIME);
+
+		PageInfo<MessageInfo> resPage = messageservice.search(messageCriteria, pageNum, pageSize);
+		return RestResponseVo.success(resPage);
 	}
 }

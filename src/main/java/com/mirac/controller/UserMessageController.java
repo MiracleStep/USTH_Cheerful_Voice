@@ -41,7 +41,7 @@ public class UserMessageController extends HttpServlet {
 	private Object add(HttpServletRequest request, HttpServletResponse response, Message message) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		User user = (User) session.getAttribute("user");
-		int userid = user.getUserid();//用户ID
+		int userid = user.getUserid();//用户IDyo
 		String msgip=IPUtil.getIP(request);//发帖人的IP
 		message.setMsgcontents(HTMLReplace.replace(message.getMsgcontents()));//帖子内容转换为HTML格式
 

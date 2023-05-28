@@ -54,6 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li><a href="register.jsp">注册</a></li>
 			</c:if>
 			<c:if test="${sessionScope.user != null}">
+				<li><a href="msgResearch.jsp">查询</a></li>
 				<li class="dropdown">
 			    	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			        	${sessionScope.user.realname}<span class="caret"></span>
